@@ -26,4 +26,4 @@ ternarySearch(arr,0, len(arr)-1, 82)
 
 # Recurrence Relation for Ternary Search: T(n) = T(n/3) + c 
 
-$T(n) = O(log_{3}n) $
+# $T(n) = O(log_{3}n) $
