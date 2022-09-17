@@ -21,7 +21,7 @@ public class FindSquareRoot {
             Program: To Find the square root of the given Number
             Input: int/long value
             Output: Returns the Square root of the given number
-            Time Complexity: O(nlogn) since we are using Binary search approach to find the square root of N
+            Time Complexity: O(logn) since we are using Binary search approach to find the square root of N
             Space Complexity: O(1)    
 
         */
