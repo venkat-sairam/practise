@@ -1,0 +1,67 @@
+---
+title: "Basic_R_Commands"
+author: "Venkat"
+date: "2024-01-28"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+CTRL+L --> clears the console logs
+
+To list the alphabets --> letters
+To list the alphabets in uppercase --> LETTERS
+
+To list the months name in an year (fully qualified name)--> month.name
+To list the months name in an year (short form abc) --> month.abb
+
+Data Types:
+==========
+
+1. INTEGER
+2. NUMERIC
+3. CHARACTER
+4. LOGICAL
+5. COMPLEX
+
+# Type checking and type conversion
+
+```{r}
+a <- 10
+# Check the datatype -> typeof(object_name)
+print(typeof(a))
+
+# To verify the data --> is_object_name()
+print(is.double(a))
+#To convert the datatype to another type --> as.data_type(object_name)
+
+print(as.integer(a))
+```
+
+
+
+
+Objects:
+========
+1. vector --> Ordered collection of  basic datatypes. All the elements are of same datatype.
+
+ages <- c(21, 23, 12, 26)
+# Here, ages is a numerical vector. 
+2. List --> Ordered collection of objects. It can contain a vector, matrix, complex vector, character array, function ...
+ids = c(1,2,3,4)
+emp.names = c("venkat", "Sairam", "Venkata Sairam Yanamandra")
+
+emp = list(id = ids, names=emp.names)
+print(emp$names) ## Only prints the emp names.
+print(emp)## Prints the empyloyee details
+print(emp[1]) # prints the employee ids
+print(emp[[1]][1]) ## prints the first employee id.
+
+emp['location'] = "Visakhapatnam" ## Creates a new element location with given value.
+
+To concatenate two lists --> c(list2, list1)
+
+
+3. Dataframe --> 
