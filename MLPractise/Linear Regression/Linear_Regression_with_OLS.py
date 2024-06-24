@@ -7,8 +7,8 @@ from sklearn.linear_model import LinearRegression
 class Linear_Regression_with_OLS:
 
     def __init__(self):
-        self.m = None
-        self.b = None
+        self.coef_ = None
+        self.intercept_ = None
 
     def fit(self, x_train, y_train):
         x_train = np.insert(x_train,0,1,axis=1)
