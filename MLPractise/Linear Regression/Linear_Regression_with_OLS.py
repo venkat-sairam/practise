@@ -11,15 +11,40 @@ class Linear_Regression_with_OLS:
         self.intercept_ = None
 
     def fit(self, x_train, y_train):
+
+        # Appending bias to the input features
+        #  beta_0 + beta_1 * x1 + beta_2 * x2 + beta_3 * x3 + ......+ beta_n * xn
+        # Convert to matrix notation, we will get beta =  [beta_0, beta_1, beta_2, beta_3......beta_n ]^T
+        #  X1 = [1, x11, x12, x13....x1n]
+        #  x2 = [1, X21, x22, x23....x2n]
+        #  x3 = [1, X31, x32, x33....x3n]
+        # ...
+        # ...
+        # ...
+        #  xm = [1, xm1, xm2, xm3....xmn]
+
+        #  X = [ x1
+        #       x2
+        #       x3
+        #       ...
+        #       xm
+        #           ]
+
+        #  error = [y - y_hat]^T *  [y_y_hat]
+        
+
         x_train = np.insert(x_train,0,1,axis=1)
 
         first = (x_train.T).dot(x_train)
         second= (x_train.T).dot(y_train)
 
-
+        # betas =  (X^T * X )^-1 * (X^T * Y)
         self.betas = np.linalg.inv(first).dot(second)
-
+        
+        #  beta_0 = betas[0]
         self.intercept_ = self.betas[0]
+
+        #  coefficients = beta[1:m]
         self.coef_ = self.betas[1:]  
 
     def predict(self, x_test):
