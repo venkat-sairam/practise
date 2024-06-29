@@ -19,22 +19,25 @@ insert into hospital values ('5', 'out', '2019-12-22 09:40:00');
 
 -- write a sql query to find the employees who are inside the hospital
 
+--================================================================
+--Approach
+--================================================================
+-- 1. Find the emp id and the latest timestamp
+-- 2. Find the emp id and the latest in time.
+-- 3. Check if the latest time and latest in-time are same
+-- 4. If yes then add to output.
+----------------------------------------------------------------
 
-with cte_inside_hospital AS
+
+with cte_latest_time AS 
 (
-	select 
-	emp_id
-	, action
-	--, time
-	, CASE 
-		WHEN h.action = 'in' THEN lead(h.time, 1) over (partition by h.emp_id order by h.emp_id, h.time)
-		when h.action = 'out' THEN h.time
-
-	END as time_out
-	from hospital h
+	select emp_id, max(time) as latest_time from hospital group by emp_id
+), latest_in_time as
+(
+	select emp_id, max(time) as latest_in_time from hospital where action='in' group by emp_id
 )
-select 
-emp_id
- from cte_inside_hospital
-where time_out IS NULL
+select * from 
+cte_latest_time t inner join latest_in_time i
+on t.emp_id=i.emp_id and t.latest_time = i.latest_in_time
 ;
+
