@@ -32,7 +32,7 @@ class Linear_Regression_with_GD:
             self.m = self.m - (self.lr * loss_slope_m)
 
     def predict(self, X):
-        return np.dot(X, self.m) + self.b
+        return  self.m * X + self.b
 
     def create_model(self, X_train, X_test, y_train, y_test):
         self.fit(X_train, y_train)
