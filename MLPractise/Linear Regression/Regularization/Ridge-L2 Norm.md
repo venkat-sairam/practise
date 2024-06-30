@@ -1,4 +1,4 @@
-Certainly! Here's the complete derivation of ridge regression coefficients with all necessary dimensions and details included:
+The markdown formatting for mathematical equations in GitHub Markdown (README files or other markdown documents) requires a specific syntax for rendering equations properly. Here’s how you can adjust your derivation for clarity and correctness in GitHub Markdown:
 
 ### Derivation of Ridge Regression Coefficients
 
@@ -6,46 +6,50 @@ Certainly! Here's the complete derivation of ridge regression coefficients with 
 
 Start with the ridge regression objective function:
 
-\[ \min_{\beta} \left\{ (\mathbf{y} - \mathbf{X}\beta)^\top (\mathbf{y} - \mathbf{X}\beta) + \lambda \beta^\top \beta \right\} \]
+```
+min_beta { (y - X*beta)' * (y - X*beta) + lambda * beta' * beta }
+```
 
 where:
-- \( \mathbf{y} \) is an \( n \times 1 \) vector of observed values,
-- \( \mathbf{X} \) is an \( n \times p \) matrix of predictors,
-- \( \beta \) is a \( p \times 1 \) vector of coefficients,
-- \( \lambda \) is the regularization parameter.
+- `y` is an `n x 1` vector of observed values,
+- `X` is an `n x p` matrix of predictors,
+- `beta` is a `p x 1` vector of coefficients,
+- `lambda` is the regularization parameter.
 
 #### Step 2: Expand the Objective Function
 
 Expand and simplify the ridge regression objective function:
 
-\[ (\mathbf{y} - \mathbf{X}\beta)^\top (\mathbf{y} - \mathbf{X}\beta) + \lambda \beta^\top \beta \]
+```
+(y' * y - 2 * beta' * X' * y + beta' * X' * X * beta + lambda * beta' * beta)
+```
 
-\[ = \mathbf{y}^\top \mathbf{y} - 2\beta^\top \mathbf{X}^\top \mathbf{y} + \beta^\top \mathbf{X}^\top \mathbf{X} \beta + \lambda \beta^\top \beta \]
-
-\[ = \mathbf{y}^\top \mathbf{y} - 2\mathbf{y}^\top \mathbf{X}\beta + \beta^\top \mathbf{X}^\top \mathbf{X} \beta + \lambda \beta^\top \beta \]
+```
+= y' * y - 2 * y' * X * beta + beta' * X' * X * beta + lambda * beta' * beta
+```
 
 #### Step 3: Take the Derivative
 
-To find the ridge regression coefficients, take the derivative of the objective function with respect to \( \beta \) and set it to zero:
+To find the ridge regression coefficients, take the derivative of the objective function with respect to `beta` and set it to zero:
 
-\[ \frac{\partial}{\partial \beta} \left\{ \mathbf{y}^\top \mathbf{y} - 2\mathbf{y}^\top \mathbf{X}\beta + \beta^\top \mathbf{X}^\top \mathbf{X} \beta + \lambda \beta^\top \beta \right\} = 0 \]
+```
+-2 * X' * y + 2 * X' * X * beta + 2 * lambda * beta = 0
+```
 
-\[ -2\mathbf{X}^\top \mathbf{y} + 2\mathbf{X}^\top \mathbf{X} \beta + 2\lambda \beta = 0 \]
+#### Step 4: Solve for `beta`
 
-#### Step 4: Solve for \( \beta \)
+Now, solve the equation for `beta`:
 
-Now, solve the equation for \( \beta \):
+```
+(X' * X + lambda * I) * beta = X' * y
+```
 
-\[ \mathbf{X}^\top \mathbf{X} \beta + \lambda \beta = \mathbf{X}^\top \mathbf{y} \]
-
-\[ (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I}) \beta = \mathbf{X}^\top \mathbf{y} \]
-
-\[ \beta = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y} \]
-
-where \( \mathbf{I} \) is the \( p \times p \) identity matrix.
+```
+beta = inverse(X' * X + lambda * I) * X' * y
+```
 
 ### Interpretation
 
-The formula \( \beta = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y} \) gives us the coefficients for ridge regression.
+The formula `beta = inverse(X' * X + lambda * I) * X' * y` gives us the coefficients for ridge regression.
 
-This equation adjusts the coefficients \( \beta \) to minimize the sum of squared residuals while penalizing them by the regularization parameter \( \lambda \). This penalty helps prevent overfitting by shrinking the coefficients, particularly useful when predictors are correlated (multicollinearity).
+This equation adjusts the coefficients `beta` to minimize the sum of squared residuals while penalizing them by the regularization parameter `lambda`. This penalty helps prevent overfitting by shrinking the coefficients, particularly useful when predictors are correlated (multicollinearity).
