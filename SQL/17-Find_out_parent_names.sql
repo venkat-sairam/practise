@@ -57,9 +57,9 @@ SELECT * from relations;
 
 with male_table AS 
 (
-SELECT * from relations r INNER JOIN people p
-on r.p_id = p.id
-WHERE gender = 'M'
+    SELECT * from relations r INNER JOIN people p
+    on r.p_id = p.id
+    WHERE gender = 'M'
 ), female_table AS
 (
 SELECT *
@@ -69,10 +69,12 @@ WHERE gender = 'F'
 )
 
 SELECT 
-male_table.c_id as child_id
-, male_table.name as father_name
-, female_table.name as mother_name
- from male_table INNER JOIN female_table
+
+    male_table.c_id as child_id
+    , male_table.name as father_name
+    , female_table.name as mother_name
+
+from male_table INNER JOIN female_table
 on male_table.c_id = female_table.c_id
 
 ;
@@ -85,14 +87,14 @@ with combined_table_cte AS
     SELECT 
     r.c_id AS child_id
     , case when p.gender  = 'M' then p.name end as father_name
-        , case when p.gender  = 'F' then p.name end as mother_name
+    , case when p.gender  = 'F' then p.name end as mother_name
     from relations r INNER JOIN people p
-        on r.p_id = p.id
+    on r.p_id = p.id
 )
 SELECT 
-child_id
-, MAX(father_name) as father_name
-, MAX(mother_name) as mother_name
+    child_id
+    , MAX(father_name) as father_name
+    , MAX(mother_name) as mother_name
 FROM combined_table_cte
 GROUP by child_id
 ;
