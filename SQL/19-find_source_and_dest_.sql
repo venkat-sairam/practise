@@ -27,6 +27,9 @@ VALUES
 
 ;
 
+----------------------------------------------------------------
+-- Problem-1: Find the source and destination
+----------------------------------------------------------------
 
 SELECT 
 l.cid
@@ -38,3 +41,61 @@ on l.cid = r.cid AND
 l.destination = r.origin
 
 ;
+
+----------------------------------------------------------------
+--
+---------
+
+CREATE TABLE sales
+(
+    order_date date,
+    customer VARCHAR(512),
+    qty INT
+);
+
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-01-01', 'C1', '20');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-01-01', 'C2', '30');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-02-01', 'C1', '10');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-02-01', 'C3', '15');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-03-01', 'C5', '19');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-03-01', 'C4', '10');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-04-01', 'C3', '13');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-04-01', 'C5', '15');
+INSERT INTO sales
+    (order_date, customer, qty)
+VALUES
+    ('2021-04-01', 'C6', '10');
+
+SELECT 
+order_date , COUNT(*) as new_customer_count
+ from(
+SELECT *
+, ROW_NUMBER() OVER(partition by customer ORDER by order_date ) as rn
+ from sales
+) A
+WHERE rn = 1
+GROUP BY order_date
