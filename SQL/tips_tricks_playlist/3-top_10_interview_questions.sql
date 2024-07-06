@@ -151,3 +151,34 @@ emp_id
 
  WHERE drn = 2
 ;
+
+
+------------------------------------------------------------------------------------------------
+-- Query-8: Find out the employees whose salary is greater than the manager's salary
+------------------------------------------------------------------------------------------------
+
+select 
+e.emp_id
+, e.emp_name
+, e.salary
+, manager.salary as managers_salary
+ from employee e
+INNER JOIN employee manager
+on e.manager_id = manager.emp_id
+WHERE e.salary > manager.salary
+
+
+ALTER table employee add sex VARCHAR(20)
+update employee SET sex = 'female'
+WHERE emp_age %2 !=0
+
+----------------------------------------------------------------
+-- Query-10: Swap the employee gender in the employees table.
+----------------------------------------------------------------
+
+
+select * FROM employee
+
+update employee set sex =  case when sex = 'male' then 'female' else 'male' end
+
+;
