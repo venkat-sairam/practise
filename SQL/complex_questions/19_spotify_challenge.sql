@@ -126,20 +126,49 @@ GROUP BY activity.event_date
 
 
 ----------------------------------------------------------------
-
+-- P3 Apporach-2
 ----------------------------------------------------------------
 
-with new_cte AS (
-SELECT 
-    user_id, event_date, COUNT(distinct event_name) as event_count
-    , case when COUNT(distinct event_name) = 2 then user_id else null end as new_user
-FROM
-    activity
-group BY user_id, event_date
-)
-select 
-event_date
+-- with new_cte AS (
+-- SELECT 
+--     user_id, event_date, COUNT(distinct event_name) as event_count
+--     , case when COUNT(distinct event_name) = 2 then user_id else null end as new_user
+-- FROM
+--     activity
+-- group BY user_id, event_date
+-- )
+-- select 
+-- event_date
 
-,COUNT(new_user) as count
-from new_cte
-GROUP BY event_date
+-- ,COUNT(new_user) as count
+-- from new_cte
+-- GROUP BY event_date;
+
+
+
+----------------------------------------------------------------
+-- P4 Country wise purchasal percentage
+----------------------------------------------------------------
+
+
+with cte as (
+SELECT 
+    *
+    , case 
+        when country IN ('India' , 'USA' )then country else 'Others'
+    end as country_code
+    , COUNT(1) OVER() as total_cnt
+
+FROM activity WHERE event_name= 'app-purchase'
+)
+SELECT 
+country_code
+, (COUNT(*) *1.0 / (total_cnt) )* (100) as total_cnt
+ FROM cte 
+ GROUP BY country_code, total_cnt
+;
+
+----------------------------------------------------------------
+--  P5: 
+----------------------------------------------------------------
+
