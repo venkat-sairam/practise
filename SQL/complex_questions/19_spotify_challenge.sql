@@ -169,6 +169,25 @@ country_code
 ;
 
 ----------------------------------------------------------------
---  P5: 
+--  P5: Purchased today and installed previous day.
 ----------------------------------------------------------------
+USE tips_db;
+
+
+with cte AS
+(
+
+SELECT
+*
+, LAG(event_date, 1, event_date) OVER(PARTITION BY user_id ORDER by user_id, event_date) as prev_Date
+, LAG(event_name, 1) OVER(PARTITION BY user_id ORDER by user_id, event_date) as prev_Day_event
+, DATEDIFF(DAY,LAG(event_date, 1, event_date) OVER(PARTITION BY user_id ORDER by user_id, event_date), event_date ) date_diff_days
+FROM activity
+)
+select 
+cte.event_date
+, COUNT(case when cte.event_name = 'app-purchase' AND prev_Day_event = 'app-installed' AND date_diff_days = 1 then 'include' end )
+FROM cte
+ GROUP BY cte.event_date
+;
 
