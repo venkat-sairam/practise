@@ -1,5 +1,8 @@
 use tips_db;
 drop table if EXISTS users;
+drop table if EXISTS orders;
+DROP TABLE if EXISTS items;
+
 
 create table users
 (
@@ -71,24 +74,57 @@ FROM users
 SELECT *
 from items;
 
-with market_analysis_cte AS
-(
-SELECT
-    *
+with
+    market_analysis_cte
+    AS
+    (
+        SELECT
+            *
 , DENSE_RANK() OVER (PARTITION BY o.seller_id order BY o.order_date) as rnk
-FROM orders o
-), main_cte as (
-SELECT 
-users.user_id
+        FROM orders o
+    ),
+    main_cte
+    as
+    (
+        SELECT
+            users.user_id
 , users.favorite_brand
 , i.*
 , case when i.item_brand = users.favorite_brand then 'yes' else 'no' end as flag
-from 
-users LEFT JOIN market_analysis_cte o
-on users.user_id = o.seller_id and rnk= 2
-LEFT JOIN items i ON i.item_id = o.item_id
-)
+        from
+            users LEFT JOIN market_analysis_cte o
+            on users.user_id = o.seller_id and rnk= 2
+            LEFT JOIN items i ON i.item_id = o.item_id
+    )
 SELECT *
-from 
-main_cte
+from
+    main_cte
 ;
+
+with
+    cte
+    AS
+    (
+        SELECT
+            order_date
+    , seller_id
+    , item_id
+    , DENSE_RANK() OVER(PARTITION BY seller_id order BY order_date) as drn
+        from orders
+    )
+SELECT
+    -- *
+    users.user_id
+-- , users.favorite_brand
+-- , item_brand
+-- -- , items.item_id
+-- , order_date
+-- , drn
+, case when item_brand= users.favorite_brand then 'Yes' else 'No' end as fav_flag
+FROM users
+    LEFT JOIN cte ON
+users.user_id = seller_id and drn = 2
+    LEFT JOIN items ON
+items.item_id = cte.item_id
+;
+
