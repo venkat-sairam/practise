@@ -61,6 +61,12 @@ values
     (5, 35, 50, 1, 1);
 
 
+/*
+    The winner in each group is the player who scored max total points
+    within the group.
+    In case of tie, the lowest player id wins.
+*/
+
 SELECT *
 FROM matches;
 SELECT *

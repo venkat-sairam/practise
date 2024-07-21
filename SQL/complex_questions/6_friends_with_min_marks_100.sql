@@ -66,6 +66,9 @@ select *
 from friend
 ;
 
+-- Write a query to find the person id, name
+-- number of friends, sum of marks of a person
+-- who have friends with total score > 100.
 
 ----------------------------------------------------------------
 -- Joining 3 tables

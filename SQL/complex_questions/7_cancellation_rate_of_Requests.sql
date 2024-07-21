@@ -1,4 +1,6 @@
 use tips_db;
+DROP TABLE Trips;
+DROP TABLE users;
 
 Create table Trips
 (
@@ -127,3 +129,18 @@ WHERE u.banned = 'No' or d.banned= 'No'
 GROUP BY t.request_at
 ORDER BY T.request_at
 
+
+
+SELECT 
+-- *
+Trips.request_at
+,CAST(SUM( case when Trips.[status] IN ('cancelled_by_client', 'cancelled_by_driver') then 1 else 0 end ) * 1.0 / COUNT(1) * 100 AS DECIMAL(4, 2))
+as cancellation_rate_percent
+From 
+Trips  INNER JOIN Users c
+on trips.client_id = c.users_id
+INNER JOIN Users d 
+on Trips.driver_id = d.users_id
+WHERE c.banned = 'No' AND d.banned = 'No'
+
+GROUP BY Trips.request_at
