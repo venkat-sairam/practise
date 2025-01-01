@@ -144,3 +144,16 @@ country_code
 , colors
 from country_wise_colors
 where colors @> '{"red","white"}';
+
+
+-- Update array values 
+
+update country_wise_colors
+set colors='{"Blue", "White","Red"}'
+where id = 1;
+
+-- remove a particular object from array
+
+update country_wise_colors
+set colors= array_remove(colors, '{"white"}')
+where id = 1;
