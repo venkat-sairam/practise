@@ -142,3 +142,35 @@ CREATE TABLE Order_Fact (
     FOREIGN KEY (Biller_Id) REFERENCES Biller_Dim (Biller_Id),
     FOREIGN KEY (Order_Date) REFERENCES Date_Dim (Order_Date)
 );
+
+
+
+-- Create Master Table by Joining Fact Table and Dimensions
+CREATE TABLE Master_Table AS
+SELECT
+    of.Order_Id,
+    of.Qty AS Quantity,
+    of.Subtotal,
+    of.Tax,
+    pd.Prod_Id AS Product_Id,
+    pd.Prod_Name AS Product_Name,
+    pd.Price AS Price_Per_Unit,
+    cd.Customer_Id,
+    cd.Customer_Name,
+    cd.Shipping_Address,
+    cd.Billing_Address,
+    sd.Store_Id,
+    sd.Store_Name,
+    bd.Biller_Id,
+    bd.Biller_Name,
+    dd.Order_Date
+FROM
+    Order_Fact of
+    JOIN Product_Dim pd ON of.Prod_Id = pd.Prod_Id
+    JOIN Customer_Dim cd ON of.Customer_Id = cd.Customer_Id
+    JOIN Store_Dim sd ON of.Store_Id = sd.Store_Id
+    JOIN Biller_Dim bd ON of.Biller_Id = bd.Biller_Id
+    JOIN Date_Dim dd ON of.Order_Date = dd.Order_Date;
+
+-- View the Master Table
+SELECT * FROM Master_Table;
