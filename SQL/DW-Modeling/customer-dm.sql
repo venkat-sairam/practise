@@ -123,3 +123,22 @@ CREATE TABLE Biller_Dim (
 
 -- Create Date Dimension Table
 CREATE TABLE Date_Dim (Order_Date DATE PRIMARY KEY);
+
+
+-- Create Fact Table
+CREATE TABLE Order_Fact (
+    Order_Id VARCHAR(10) PRIMARY KEY,
+    Qty INT,
+    Subtotal DECIMAL(10, 2),
+    Tax DECIMAL(10, 2),
+    Prod_Id VARCHAR(10),
+    Customer_Id VARCHAR(10),
+    Store_Id VARCHAR(10),
+    Biller_Id VARCHAR(10),
+    Order_Date DATE,
+    FOREIGN KEY (Prod_Id) REFERENCES Product_Dim (Prod_Id),
+    FOREIGN KEY (Customer_Id) REFERENCES Customer_Dim (Customer_Id),
+    FOREIGN KEY (Store_Id) REFERENCES Store_Dim (Store_Id),
+    FOREIGN KEY (Biller_Id) REFERENCES Biller_Dim (Biller_Id),
+    FOREIGN KEY (Order_Date) REFERENCES Date_Dim (Order_Date)
+);
