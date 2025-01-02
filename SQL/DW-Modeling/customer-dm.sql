@@ -92,3 +92,34 @@ VALUES (
         'B003',
         'PayPal'
     );
+
+
+    -- Create Customer Dimension Table
+CREATE TABLE Customer_Dim (
+    Customer_Id VARCHAR(10) PRIMARY KEY,
+    Customer_Name VARCHAR(50),
+    Shipping_Address VARCHAR(100),
+    Billing_Address VARCHAR(100)
+);
+
+-- Create Store Dimension Table
+CREATE TABLE Store_Dim (
+    Store_Id VARCHAR(10) PRIMARY KEY,
+    Store_Name VARCHAR(50)
+);
+
+-- Create Product Dimension Table
+CREATE TABLE Product_Dim (
+    Prod_Id VARCHAR(10) PRIMARY KEY,
+    Prod_Name VARCHAR(50),
+    Price DECIMAL(10, 2)
+);
+
+-- Create Biller Dimension Table
+CREATE TABLE Biller_Dim (
+    Biller_Id VARCHAR(10) PRIMARY KEY,
+    Biller_Name VARCHAR(50)
+);
+
+-- Create Date Dimension Table
+CREATE TABLE Date_Dim (Order_Date DATE PRIMARY KEY);
