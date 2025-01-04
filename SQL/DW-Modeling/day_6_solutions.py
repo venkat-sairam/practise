@@ -123,3 +123,27 @@ november_returned_orders_df.orderBy("sub_category").show()
     .where(col("return_reason_count") == 0)
     .show()
 )
+
+
+
+### write a query to get number of business days between order_date and ship_date (exclude weekends). 
+### Assume that all order date and ship date are on weekdays only
+
+
+from pyspark.sql.functions import  expr, datediff
+
+business_days_df =(
+    orders_df
+    .withColumn("business_days", 
+               expr(
+               """
+               DATEDIFF(ship_date, order_date) + 1
+               - (DATEDIFF(ship_date, order_date) / 7) * 2
+               - CASE WHEN dayofweek(order_date) IN (1, 7) THEN 1 ELSE 0 END
+               - CASE WHEN dayofweek(ship_date) IN (1, 7) THEN 1 ELSE 0 END
+               """
+               ).cast("int")
+    )
+    .show()
+    
+)
