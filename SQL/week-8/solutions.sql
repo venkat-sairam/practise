@@ -135,3 +135,15 @@ ON products.product_id = sales.product_id
 group by products.product_name
 order by products.product_name
 ;
+
+-- Exploding a column in MSSQL Server
+
+select 
+category
+, COUNT(1) AS product_count
+from categories
+CROSS APPLY 
+    STRING_SPLIT(products, ',')
+GROUP BY category
+order by product_count
+;
