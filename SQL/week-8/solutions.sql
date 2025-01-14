@@ -22,3 +22,27 @@ from feb_weekdays_cte
 GROUP BY category
 ORDER BY total_sales
 ;
+
+-- ==============
+--  Question - 3
+--  ==============
+-- Write an SQL query to retrieve the total sales amount in each category. 
+--Include all categories, if no products were sold in a category display as 0. Display the output in ascending order of total_sales.
+
+WITH grouped_Sales_amount AS(
+
+  select
+      category_id 
+      , SUM(amount) AS total_sales
+  from sales
+  group by category_id
+)
+
+select 
+category_name
+, CASE WHEN cat.total_sales is NOT NULL THEN cat.total_sales else 0 end as total_sales
+from categories
+LEFT JOIN grouped_Sales_amount as cat
+ON categories.category_id = cat.category_id
+order by total_sales
+;
