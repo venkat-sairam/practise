@@ -99,3 +99,39 @@ on l.department_id = r.department_id
 order by  r.average_salary desc
 ;
 
+
+-- https://www.namastesql.com/coding-problem/72-product-sales
+
+-- You are provided with two tables: Products and Sales.
+-- The Products table contains information about various products, including their IDs, names, and prices. 
+-- The Sales table contains data about sales transactions, including the product IDs, quantities sold, and dates of sale. 
+-- Your task is to write a SQL query to find the total sales amount for each product. Display product name and total sales .
+-- Sort the result by product name.
+
+ 
+
+Table: products
++--------------+-------------+
+| COLUMN_NAME  | DATA_TYPE   |
++--------------+-------------+
+| product_id   | int         |
+| product_name | varchar(10) |
+| price        | int         |
++--------------+-------------+
+Table: sales
++-------------+-----------+
+| COLUMN_NAME | DATA_TYPE |
++-------------+-----------+
+| sale_id     | int       |
+| product_id  | int       |
+| quantity    | int       |
+| sale_date   | date      |
++-------------+-----------+
+select 
+products.product_name
+, SUM(products.price * sales.quantity ) as total_sales
+from products LEFT JOIN sales
+ON products.product_id = sales.product_id
+group by products.product_name
+order by products.product_name
+;
